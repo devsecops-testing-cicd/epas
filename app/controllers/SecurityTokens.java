@@ -108,7 +108,7 @@ public class SecurityTokens extends Controller {
   @NoCheck
   public static void check(String token) {
     try {
-      Object body = Jwts.parserBuilder().setSigningKey(key()).build().parse(token).getBody();
+      Object body = Jwts.parserBuilder().build().parse(token).getBody();
       String user = ((Claims) body).getSubject();
       renderText("success " + user);
     } catch (SecurityException e) {
@@ -256,7 +256,7 @@ public class SecurityTokens extends Controller {
     String issuer = untrusted.getBody().getIssuer();
     Object jwtBody;
     if (issuer.equals(Router.getBaseUrl())) {
-      jwtBody = Jwts.parserBuilder().setSigningKey(key()).build().parse(jwt).getBody();
+      jwtBody = Jwts.parserBuilder().build().parse(jwt).getBody();
     } else {
       jwtBody = Jwts.parserBuilder()
           .setSigningKeyResolver(openIdConnectClient.getJwksResolver()).build()
